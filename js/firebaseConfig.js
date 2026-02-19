@@ -21,8 +21,11 @@ const firebaseConfig = {
 };
 
 // (Debug) Put this AFTER the const firebaseConfig, BEFORE initializeApp:
-console.log('Config loaded for:', firebaseConfig.projectId, 
-            'apiKey starts with:', (firebaseConfig.apiKey||'').slice(0,6));
+
+console.log(
+  'Config loaded for:', firebaseConfig.projectId,
+  'apiKey starts with:', (firebaseConfig.apiKey||'').slice(0,6)
+);
 
 // --- Initialize & exports
 export const app  = initializeApp(firebaseConfig);
