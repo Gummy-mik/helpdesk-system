@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Ticket</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="brand">Helpdesk</div>
+    <div class="links">
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./create_ticket.html" class="active">Create Ticket</a>
+      <a href="./tickets.html">Tickets</a>
+      <a href="./pm.html">PM</a>
+      <button id="logoutBtn" class="danger small">Logout</button>
+    </div>
+  </nav>
+  <main class="container">
+    <h2>Create Ticket</h2>
+    <div class="card">
+      <input id="title" placeholder="Title" />
+      <textarea id="desc" placeholder="Description"></textarea>
+      <select id="priority">
+        <option value="Low">Low</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="High">High</option>
+        <option value="Critical">Critical</option>
+      </select>
+      <label><input type="checkbox" id="urgent"/> Urgent</label>
+      <select id="branch"></select>
+      <button id="submitBtn">Submit Ticket</button>
+    </div>
+  </main>
+  <script type="module" src="./js/firebaseConfig.js"></script>
+  <script type="module" src="./js/auth_guard.js"></script>
+  <script type="module" src="./js/db.js"></script>
+  <script type="module">
+    import { onAuthGuard } from './js/auth_guard.js';
+    import { listBranches, createTicket } from './js/db.js';
+    onAuthGuard(async (user) => {
+      document.getElementById('logoutBtn').onclick = window.appLogout;
+      const branches = await listBranches();
+      const sel = document.getElementById('branch');
+      branches.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b.branchId; opt.textContent = `${b.name} (${b.region||''})`;
+        sel.appendChild(opt);
+      });
+      document.getElementById('submitBtn').onclick = async () => {
+        await createTicket({
+          title: document.getElementById('title').value,
+          description: document.getElementById('desc').value,
+          priority: document.getElementById('priority').value,
+          isUrgent: document.getElementById('urgent').checked,
+          branchId: sel.value
+        });
+        alert('Ticket created');
+        window.location.href = './tickets.html';
+      };
+    });
+  </script>
+</body>
+</html>

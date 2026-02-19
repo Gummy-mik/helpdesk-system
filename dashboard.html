@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="brand">Helpdesk</div>
+    <div class="links">
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./create_ticket.html">Create Ticket</a>
+      <a href="./tickets.html">Tickets</a>
+      <a href="./pm.html">PM</a>
+      <button id="logoutBtn" class="danger small">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h2>Dashboard</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-value" id="kpiPending">0</div><div class="kpi-label">Pending Works</div></div>
+      <div class="kpi"><div class="kpi-value" id="kpiUrgent">0</div><div class="kpi-label">Urgent Works</div></div>
+      <div class="kpi"><div class="kpi-value" id="kpiCompleted">0</div><div class="kpi-label">Completed (This Month)</div></div>
+    </div>
+  </main>
+
+  <script type="module" src="./js/firebaseConfig.js"></script>
+  <script type="module" src="./js/auth_guard.js"></script>
+  <script type="module" src="./js/db.js"></script>
+  <script type="module">
+    import { onAuthGuard } from './js/auth_guard.js';
+    import { getDashKPIs } from './js/db.js';
+    onAuthGuard(async (user) => {
+      const kpis = await getDashKPIs(user);
+      document.getElementById('kpiPending').textContent = kpis.pending;
+      document.getElementById('kpiUrgent').textContent = kpis.urgent;
+      document.getElementById('kpiCompleted').textContent = kpis.completedMonth;
+      document.getElementById('logoutBtn').onclick = window.appLogout;
+    });
+  </script>
+</body>
+</html>

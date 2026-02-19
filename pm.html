@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PM Planner</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="brand">Helpdesk</div>
+    <div class="links">
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./create_ticket.html">Create Ticket</a>
+      <a href="./tickets.html">Tickets</a>
+      <a href="./pm.html" class="active">PM</a>
+      <button id="logoutBtn" class="danger small">Logout</button>
+    </div>
+  </nav>
+  <main class="container">
+    <h2>PM Planner (Manual)</h2>
+    <div class="card">
+      <select id="branch"></select>
+      <select id="visitType">
+        <option>Monthly Visit 1</option>
+        <option>Monthly Visit 2</option>
+        <option>Quarterly PM</option>
+      </select>
+      <input id="nextDue" type="date" />
+      <input id="vendor" placeholder="Vendor (e.g., AJSL)" />
+      <button id="savePm">Save/Update PM</button>
+    </div>
+    <h3>Upcoming PM</h3>
+    <div id="pmList" class="list"></div>
+  </main>
+  <script type="module" src="./js/firebaseConfig.js"></script>
+  <script type="module" src="./js/auth_guard.js"></script>
+  <script type="module" src="./js/db.js"></script>
+  <script type="module">
+    import { onAuthGuard } from './js/auth_guard.js';
+    import { listBranches, upsertPM, listUpcomingPM } from './js/db.js';
+    onAuthGuard(async (user) => {
+      document.getElementById('logoutBtn').onclick = window.appLogout;
+      const branches = await listBranches();
+      const sel = document.getElementById('branch');
+      branches.forEach(b => { const o=document.createElement('option'); o.value=b.branchId; o.textContent=`${b.name}`; sel.appendChild(o); });
+      document.getElementById('savePm').onclick = async () => {
+        await upsertPM({
+          branchId: sel.value,
+          visitType: document.getElementById('visitType').value,
+          nextDueDate: document.getElementById('nextDue').value,
+          vendor: document.getElementById('vendor').value,
+          isActive: true
+        });
+        alert('PM saved');
+        window.location.reload();
+      };
+      const pms = await listUpcomingPM();
+      const container = document.getElementById('pmList');
+      if(!pms.length){ container.innerHTML = '<p>No upcoming PM.</p>'; return; }
+      pms.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${p.branchId} – ${p.visitType}</h3>
+          <p>Next Due: ${p.nextDueDate || ''} · Vendor: ${p.vendor||''}</p>`;
+        container.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>

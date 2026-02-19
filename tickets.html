@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tickets</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="brand">Helpdesk</div>
+    <div class="links">
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./create_ticket.html">Create Ticket</a>
+      <a href="./tickets.html" class="active">Tickets</a>
+      <a href="./pm.html">PM</a>
+      <button id="logoutBtn" class="danger small">Logout</button>
+    </div>
+  </nav>
+  <main class="container">
+    <h2>My Tickets</h2>
+    <div id="list" class="list"></div>
+  </main>
+  <script type="module" src="./js/firebaseConfig.js"></script>
+  <script type="module" src="./js/auth_guard.js"></script>
+  <script type="module" src="./js/db.js"></script>
+  <script type="module">
+    import { onAuthGuard } from './js/auth_guard.js';
+    import { myTickets } from './js/db.js';
+    onAuthGuard(async (user) => {
+      document.getElementById('logoutBtn').onclick = window.appLogout;
+      const tickets = await myTickets(user.uid);
+      const container = document.getElementById('list');
+      if (!tickets.length) { container.innerHTML = '<p>No tickets yet.</p>'; return; }
+      tickets.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${t.title} <span class="pill ${t.status}">${t.status}</span></h3>
+          <p>${t.description||''}</p>
+          <small>Priority: ${t.priority} · Branch: ${t.branchId} · Urgent: ${t.isUrgent? 'Yes':'No'}</small>`;
+        container.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>
