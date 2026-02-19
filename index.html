@@ -13,14 +13,30 @@
     <h1>Helpdesk</h1>
     <div class="card">
       <h2>Login</h2>
-      <input id="email" type="email" placeholder="Email" />
-      <input id="password" type="password" placeholder="Password" />
-      <button id="loginBtn">Login</button>
-      <button id="signupBtn" class="secondary">Create account</button>
+
+      <!-- Put inputs inside a form -->
+      <form id="loginForm" autocomplete="on">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Email" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Password" required />
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="loginBtn">Login</button>
+          <button type="button" id="signupBtn" class="secondary">Create account</button>
+        </div>
+      </form>
     </div>
   </div>
 
+  <!-- IMPORTANT: both must have correct closing quotes and type="module" -->
   <script type="module" src="./js/firebaseConfig.js?v=4"></script>
   <script type="module" src="./js/auth.js?v=4"></script>
 </body>
 </html>
+``
