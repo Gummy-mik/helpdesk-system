@@ -15,7 +15,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDhg1JSs56QyK8uhWbWNL3wv_B-smLZNmrU",
   authDomain: "helpdesk-mark.firebaseapp.com",
   projectId: "helpdesk-mark",
-  storageBucket: "helpdesk-mark.firebasestorage.app",
+  storageBucket: "helpdesk-mark.appspot.com",
   messagingSenderId: "12106153710",
   appId: "1:12106153710:web:68d283fa8c051fc2d9b13f"
 };
