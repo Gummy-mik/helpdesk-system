@@ -11,13 +11,14 @@ import {
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // --- YOUR REAL CONFIG (keep as-is, based on your screenshot)
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDhg1JSs56QyK8uhWbWNL3wv_B-smLZNmrU",
+  apiKey: "AIzaSyDhg1JSs5G0yK8uhWbNl3wv_B-smlZNmrU",
   authDomain: "helpdesk-mark.firebaseapp.com",
   projectId: "helpdesk-mark",
-  storageBucket: "helpdesk-mark.appspot.com",
-  messagingSenderId: "12106153710",
-  appId: "1:12106153710:web:68d283fa8c051fc2d9b13f"
+  storageBucket: "helpdesk-mark.firebasestorage.app",
+  messagingSenderId: "21016513710",
+  appId: "1:21016513710:web:68d283fa8c051fc2d9b13f"
 };
 
 // (Debug) Put this AFTER the const firebaseConfig, BEFORE initializeApp:
