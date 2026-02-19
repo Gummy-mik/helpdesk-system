@@ -1,4 +1,6 @@
 
+console.log('Config loaded for:', firebaseConfig.projectId, 'apiKey starts with:', (firebaseConfig.apiKey||'').slice(0,6));
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } 
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
