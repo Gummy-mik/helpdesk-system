@@ -4,12 +4,12 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "YOUR_REAL_KEY",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcd..."
+  apiKey: "AIzaSyDhg1JSs56QyK8uhWbWNL3wv_B-smLZNmrU",
+  authDomain: "helpdesk-mark.firebaseapp.com",
+  projectId: "helpdesk-mark",
+  storageBucket: "helpdesk-mark.firebasestorage.app",
+  messagingSenderId: "12106153710",
+  appId: "1:12106153710:web:68d283fa8c051fc2d9b13f"
 };
 
 export const app = initializeApp(firebaseConfig);
